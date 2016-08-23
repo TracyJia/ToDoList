@@ -1,5 +1,5 @@
 // Java Resource/src/servlet/RegServlet.java
-// 执行用户登录操作
+// 用户注册
 
 package servlet;
 
@@ -73,4 +73,4 @@ public class RegServlet extends HttpServlet {
 		doPost(request, response);
 	} // void doGet();
 
-} // class LoginInServlet;
+} // class RegServlet;
