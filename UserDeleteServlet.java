@@ -1,5 +1,5 @@
-// Java Resource/src/servlet/LoginInServlet.java
-// Ö´ĞĞÓÃ»§µÇÂ¼²Ù×÷
+// Java Resource/src/servlet/UserDeleteServlet.java
+// æ³¨é”€è´¦æˆ·
 
 package servlet;
 
@@ -24,17 +24,17 @@ public class UserDeleteServlet extends HttpServlet {
 	private static Connection conn = null;
 	
 	@Override
-	public void init() { // ½¨Á¢Êı¾İ¿âÁ¬½Ó
+	public void init() { // å»ºç«‹æ•°æ®åº“è¿æ¥
 		
-		String DRIVER = "com.mysql.jdbc.Driver"; // Êı¾İ¿âÇı¶¯
-		// Á¬½ÓÊı¾İ¿âµÄ URL µØÖ·
+		String DRIVER = "com.mysql.jdbc.Driver"; // æ•°æ®åº“é©±åŠ¨
+		// è¿æ¥æ•°æ®åº“çš„ URL åœ°å€
 		String URL = "jdbc:mysql://localhost:3306/todolist?useUnicode=true&characterEncoding=UTF-8"; 
 		String USERNAME = "root";
 		String PASSWORD = "root";
 		
 		try {
-			Class.forName(DRIVER); // ¼ÓÔØÇı¶¯³ÌĞò
-			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // ´´½¨Á¬½Ó¶ÔÏó
+			Class.forName(DRIVER); // åŠ è½½é©±åŠ¨ç¨‹åº
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // åˆ›å»ºè¿æ¥å¯¹è±¡
 			System.out.println("ok!");
 		} catch(Exception ex){
 			ex.printStackTrace();
@@ -42,10 +42,10 @@ public class UserDeleteServlet extends HttpServlet {
 		}
 	} // void init();
 	
-	public static void main(String[] args) {
-		UserDeleteServlet ls = new UserDeleteServlet();
-		ls.init();
-	}
+	// public static void main(String[] args) { // æµ‹è¯•æ•°æ®åº“
+	// 	UserDeleteServlet ls = new UserDeleteServlet();
+	// 	ls.init();
+	// }
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -54,14 +54,14 @@ public class UserDeleteServlet extends HttpServlet {
 		try {
 				String sql = "DELETE FROM users WHERE email='" + email + "'";  
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				//pstmt.setString(1, taskname); // ½« sql Óï¾äÖĞµÚÒ»¸öÎÊºÅÉèÖÃÎª±äÁ¿ email µÄÖµ
+				//pstmt.setString(1, taskname); // å°† sql è¯­å¥ä¸­ç¬¬ä¸€ä¸ªé—®å·è®¾ç½®ä¸ºå˜é‡ email çš„å€¼
 				//pstmt.setString(1, id);
 				pstmt.executeUpdate();
 				response.sendRedirect("index.html");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} // end try
 		
 	} // void doPost();
 	
@@ -69,4 +69,4 @@ public class UserDeleteServlet extends HttpServlet {
 		doPost(request, response);
 	} // void doGet();
 
-} // class LoginInServlet;
+} // class UserDeleteServlet;
