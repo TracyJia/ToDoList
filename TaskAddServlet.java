@@ -1,5 +1,5 @@
-// Java Resource/src/servlet/LoginInServlet.java
-// Ö´ĞĞÓÃ»§µÇÂ¼²Ù×÷
+// Java Resource/src/servlet/TaskAddServlet.java
+// æ·»åŠ ä»»åŠ¡
 
 package servlet;
 
@@ -14,24 +14,21 @@ import javax.servlet.http.*;
 @WebServlet("/task.add.do")
 public class TaskAddServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static Connection conn = null;
 	
 	@Override
-	public void init() { // ½¨Á¢Êı¾İ¿âÁ¬½Ó
+	public void init() { // å»ºç«‹æ•°æ®åº“è¿æ¥
 		
-		String DRIVER = "com.mysql.jdbc.Driver"; // Êı¾İ¿âÇı¶¯
-		// Á¬½ÓÊı¾İ¿âµÄ URL µØÖ·
+		String DRIVER = "com.mysql.jdbc.Driver"; // æ•°æ®åº“é©±åŠ¨
+		// è¿æ¥æ•°æ®åº“çš„ URL åœ°å€
 		String URL = "jdbc:mysql://localhost:3306/todolist?useUnicode=true&characterEncoding=UTF-8"; 
 		String USERNAME = "root";
 		String PASSWORD = "root";
 		
 		try {
-			Class.forName(DRIVER); // ¼ÓÔØÇı¶¯³ÌĞò
-			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // ´´½¨Á¬½Ó¶ÔÏó
+			Class.forName(DRIVER); // åŠ è½½é©±åŠ¨ç¨‹åº
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // åˆ›å»ºè¿æ¥å¯¹è±¡
 			//System.out.println("ok!");
 		} catch(Exception ex){
 			ex.printStackTrace();
@@ -39,7 +36,7 @@ public class TaskAddServlet extends HttpServlet {
 		}
 	} // void init();
 	
-//	public static void main(String[] args) {
+//	public static void main(String[] args) { // æµ‹è¯•æ•°æ®åº“
 //		TaskAddServlet ls = new TaskAddServlet();
 //		ls.init();
 //	}
@@ -56,19 +53,19 @@ public class TaskAddServlet extends HttpServlet {
 			try {
 				String sql = "INSERT INTO tasks (taskname,user_email, type) VALUES (?,?,?) ";  
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, taskname); // ½« sql Óï¾äÖĞµÚÒ»¸öÎÊºÅÉèÖÃÎª±äÁ¿ email µÄÖµ
+				pstmt.setString(1, taskname); // å°† sql è¯­å¥ä¸­ç¬¬ä¸€ä¸ªé—®å·è®¾ç½®ä¸ºå˜é‡ email çš„å€¼
 				pstmt.setString(2, email);
 				pstmt.setString(3, "type");
 				pstmt.executeUpdate();
 				response.sendRedirect("add.successful.html");
 			}catch(Exception ex){
 				ex.printStackTrace();
-			}
+			} // end try
 		
 	} // void doPost();
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		doPost(request, response);
 	} // void doGet();
 
 } // class LoginInServlet;
