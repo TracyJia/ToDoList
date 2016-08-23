@@ -96,4 +96,4 @@ public class QueryServlet extends HttpServlet {
 		doPost(request, response);
 	} // void doGet();
 	
-} // class LoginInServlet;
+} // class QueryServlet;
