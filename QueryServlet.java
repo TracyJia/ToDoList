@@ -1,5 +1,5 @@
-// Java Resource/src/servlet/LoginInServlet.java
-// Ö´ĞĞÓÃ»§µÇÂ¼²Ù×÷
+// Java Resource/src/servlet/QueryServlet.java
+// æŸ¥è¯¢ç”¨æˆ·å…¨éƒ¨ä»»åŠ¡
 
 package servlet;
 
@@ -20,24 +20,21 @@ import beans.Tasks;
 @WebServlet("/QueryServlet.do")
 public class QueryServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static Connection conn = null;
 	
 	@Override
-	public void init() { // ½¨Á¢Êı¾İ¿âÁ¬½Ó
+	public void init() { // å»ºç«‹æ•°æ®åº“è¿æ¥
 		
-		String DRIVER = "com.mysql.jdbc.Driver"; // Êı¾İ¿âÇı¶¯
-		// Á¬½ÓÊı¾İ¿âµÄ URL µØÖ·
+		String DRIVER = "com.mysql.jdbc.Driver"; // æ•°æ®åº“é©±åŠ¨
+		// è¿æ¥æ•°æ®åº“çš„ URL åœ°å€
 		String URL = "jdbc:mysql://localhost:3306/todolist?useUnicode=true&characterEncoding=UTF-8"; 
 		String USERNAME = "root";
 		String PASSWORD = "root";
 		
 		try {
-			Class.forName(DRIVER); // ¼ÓÔØÇı¶¯³ÌĞò
-			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // ´´½¨Á¬½Ó¶ÔÏó
+			Class.forName(DRIVER); // åŠ è½½é©±åŠ¨ç¨‹åº
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // åˆ›å»ºè¿æ¥å¯¹è±¡
 			System.out.println("ok!");
 		} catch(Exception ex){
 			ex.printStackTrace();
@@ -45,7 +42,7 @@ public class QueryServlet extends HttpServlet {
 		}
 	} // void init();
 	
-//	public static void main(String[] args) {
+//	public static void main(String[] args) { // æµ‹è¯•æ•°æ®åº“
 //		LoginInServlet ls = new LoginInServlet();
 //		ls.init();
 //	}
@@ -61,7 +58,7 @@ public class QueryServlet extends HttpServlet {
 			try {
 				String sql = "SELECT * FROM tasks WHERE user_email=?";  
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, email); // ½« sql Óï¾äÖĞµÚÒ»¸öÎÊºÅÉèÖÃÎª±äÁ¿ email µÄÖµ
+				pstmt.setString(1, email); // å°† sql è¯­å¥ä¸­ç¬¬ä¸€ä¸ªé—®å·è®¾ç½®ä¸ºå˜é‡ email çš„å€¼
 				ResultSet rs = pstmt.executeQuery();
 				ArrayList<Tasks> tasklist = new ArrayList<Tasks>();
 				
@@ -72,7 +69,7 @@ public class QueryServlet extends HttpServlet {
 				if(rs.next()){
 					rs = null;
 					rs = pstmt.executeQuery();
-					while (rs.next()) { // Èç¹û²éÑ¯ÓĞ½á¹û
+					while (rs.next()) { // å¦‚æœæŸ¥è¯¢æœ‰ç»“æœ
 						Tasks task = new Tasks();
 						task.setEmail(rs.getString("user_email"));
 						task.setId(rs.getInt("id"));
@@ -80,11 +77,11 @@ public class QueryServlet extends HttpServlet {
 						task.setAccomplished(rs.getInt("accomplished"));
 						task.setType(rs.getString("type"));
 						tasklist.add(task);
-					} // end if (rs.next());
+					} // end while (rs.next());
 					request.getSession().setAttribute("tasklist", tasklist);
 					response.sendRedirect("home.jsp");
-				}
-				else { // Èç¹û²éÑ¯ÎŞ½á¹û
+				} // end if(rs.next())
+				else { // å¦‚æœæŸ¥è¯¢æ— ç»“æœ
 					response.sendRedirect("home_null.jsp");
 						//System.out.println(rs.getString("password") + request.getParameter("password"));
 					return;
