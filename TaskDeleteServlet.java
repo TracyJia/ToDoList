@@ -1,5 +1,5 @@
-// Java Resource/src/servlet/LoginInServlet.java
-// Ö´ĞĞÓÃ»§µÇÂ¼²Ù×÷
+// Java Resource/src/servlet/TaskDeleteServlet.java
+// åˆ é™¤ä»»åŠ¡
 
 package servlet;
 
@@ -17,35 +17,32 @@ import javax.servlet.http.*;
 @WebServlet("/task.delete.do")
 public class TaskDeleteServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static Connection conn = null;
 	
 	@Override
-	public void init() { // ½¨Á¢Êı¾İ¿âÁ¬½Ó
+	public void init() { // å»ºç«‹æ•°æ®åº“è¿æ¥
 		
-		String DRIVER = "com.mysql.jdbc.Driver"; // Êı¾İ¿âÇı¶¯
-		// Á¬½ÓÊı¾İ¿âµÄ URL µØÖ·
+		String DRIVER = "com.mysql.jdbc.Driver"; // æ•°æ®åº“é©±åŠ¨
+		// è¿æ¥æ•°æ®åº“çš„ URL åœ°å€
 		String URL = "jdbc:mysql://localhost:3306/todolist?useUnicode=true&characterEncoding=UTF-8"; 
 		String USERNAME = "root";
 		String PASSWORD = "root";
 		
 		try {
-			Class.forName(DRIVER); // ¼ÓÔØÇı¶¯³ÌĞò
-			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // ´´½¨Á¬½Ó¶ÔÏó
-			System.out.println("ok!");
+			Class.forName(DRIVER); // åŠ è½½é©±åŠ¨ç¨‹åº
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // åˆ›å»ºè¿æ¥å¯¹è±¡
+			//System.out.println("ok!");
 		} catch(Exception ex){
 			ex.printStackTrace();
 			System.out.println("something wrong!");
 		}
 	} // void init();
 	
-	public static void main(String[] args) {
-		TaskDeleteServlet ls = new TaskDeleteServlet();
-		ls.init();
-	}
+	// public static void main(String[] args) { // æµ‹è¯•æ•°æ®åº“
+	// 	TaskDeleteServlet ls = new TaskDeleteServlet();
+	// 	ls.init();
+	// }
 	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -62,7 +59,7 @@ public class TaskDeleteServlet extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} // end try
 		
 	} // void doPost();
 	
@@ -70,4 +67,4 @@ public class TaskDeleteServlet extends HttpServlet {
 		doPost(request, response);
 	} // void doGet();
 
-} // class LoginInServlet;
+} // class TaskDeleteServlet;
