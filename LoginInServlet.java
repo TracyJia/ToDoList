@@ -1,5 +1,5 @@
 // Java Resource/src/servlet/LoginInServlet.java
-// Ö´ĞĞÓÃ»§µÇÂ¼²Ù×÷
+// æ‰§è¡Œç”¨æˆ·ç™»å½•æ“ä½œ
 
 package servlet;
 
@@ -18,24 +18,21 @@ import beans.Users;
 @WebServlet("/login.do")
 public class LoginInServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static Connection conn = null;
 	
 	@Override
-	public void init() { // ½¨Á¢Êı¾İ¿âÁ¬½Ó
+	public void init() { // å»ºç«‹æ•°æ®åº“è¿æ¥
 		
-		String DRIVER = "com.mysql.jdbc.Driver"; // Êı¾İ¿âÇı¶¯
-		// Á¬½ÓÊı¾İ¿âµÄ URL µØÖ·
+		String DRIVER = "com.mysql.jdbc.Driver"; // æ•°æ®åº“é©±åŠ¨
+		// è¿æ¥æ•°æ®åº“çš„ URL åœ°å€
 		String URL = "jdbc:mysql://localhost:3306/todolist?useUnicode=true&characterEncoding=UTF-8"; 
 		String USERNAME = "root";
 		String PASSWORD = "root";
 		
 		try {
-			Class.forName(DRIVER); // ¼ÓÔØÇı¶¯³ÌĞò
-			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // ´´½¨Á¬½Ó¶ÔÏó
+			Class.forName(DRIVER); // åŠ è½½é©±åŠ¨ç¨‹åº
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD); // åˆ›å»ºè¿æ¥å¯¹è±¡
 			//System.out.println("ok!");
 		} catch(Exception ex){
 			ex.printStackTrace();
@@ -43,46 +40,46 @@ public class LoginInServlet extends HttpServlet {
 		}
 	} // void init();
 	
-//	public static void main(String[] args) {
+//	public static void main(String[] args) { // æµ‹è¯•æ•°æ®åº“
 //		LoginInServlet ls = new LoginInServlet();
 //		ls.init();
 //	}
 //	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-	// ¸ù¾İÓÃ»§ÊäÈëµÄ email ÔÚÊı¾İ¿âÖĞ²éÑ¯¸ÃÓÃ»§ÊÇ·ñ´æÔÚ£¬
-	// ´æÔÚÔòÅĞ¶ÏÃÜÂëÊäÈëÊÇ·ñÕıÈ·£¬ÃÜÂëÕıÈ·Ìø×ªÖÁµÇÂ¼³É¹¦Ò³Ãæ£¬ÃÜÂë´íÎóÌø×ªÖÁµÇÂ¼Ê§°ÜÒ³Ãæ
-	// ÓÃ»§²»´æÔÚ£¬ÔòÌø×ªÖÁµÇÂ¼Ê§°ÜÒ³Ãæ	
+	// æ ¹æ®ç”¨æˆ·è¾“å…¥çš„ email åœ¨æ•°æ®åº“ä¸­æŸ¥è¯¢è¯¥ç”¨æˆ·æ˜¯å¦å­˜åœ¨ï¼Œ
+	// å­˜åœ¨åˆ™åˆ¤æ–­å¯†ç è¾“å…¥æ˜¯å¦æ­£ç¡®ï¼Œå¯†ç æ­£ç¡®è·³è½¬è‡³ç™»å½•æˆåŠŸé¡µé¢ï¼Œå¯†ç é”™è¯¯è·³è½¬è‡³ç™»å½•å¤±è´¥é¡µé¢ï¼Œ
+	// ç”¨æˆ·ä¸å­˜åœ¨ï¼Œåˆ™è·³è½¬è‡³ç™»å½•å¤±è´¥é¡µé¢	
 		String email = request.getParameter("email");
 		System.out.println(email);
 		try {
 			String sql = "SELECT * FROM users WHERE email=?";  
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email); // ½« sql Óï¾äÖĞµÚÒ»¸öÎÊºÅÉèÖÃÎª±äÁ¿ email µÄÖµ
+			pstmt.setString(1, email); // å°† sql è¯­å¥ä¸­ç¬¬ä¸€ä¸ªé—®å·è®¾ç½®ä¸ºå˜é‡ email çš„å€¼
 			ResultSet rs = pstmt.executeQuery();
 			//System.out.println(request.getSession().getId());
 			
 			
-			if (rs.next()) { // Èç¹û²éÑ¯ÓĞ½á¹û
-				if (rs.getString("password").equals(request.getParameter("password"))) { // Èç¹ûÃÜÂëÓëÊı¾İ¿âÖĞ¶ÔÓ¦ÃÜÂëÏàÍ¬
+			if (rs.next()) { // å¦‚æœæŸ¥è¯¢æœ‰ç»“æœ
+				if (rs.getString("password").equals(request.getParameter("password"))) { // å¦‚æœå¯†ç ä¸æ•°æ®åº“ä¸­å¯¹åº”å¯†ç ç›¸åŒ
 					Users user = new Users();
 					user.setEmail(rs.getString("email"));
 					user.setId(rs.getInt("id"));
 					user.setUsername(rs.getString("username"));
 					//System.out.println("SESSION:" + request.getSession().getAttributeNames());
-					request.getSession().setAttribute("email", email); // ¸ø»á»°ÉèÖÃÊôĞÔ£¬¼üÎª "user"£¬ÖµÎª¶ÔÏó user
+					request.getSession().setAttribute("email", email); // ç»™ä¼šè¯è®¾ç½®å±æ€§ï¼Œé”®ä¸º "user"ï¼Œå€¼ä¸ºå¯¹è±¡ user
 					//System.out.println(request.getSession().getAttribute("email"));
 					//System.out.println("SESSION:" + request.getSession().getAttributeNames());
 					//System.out.println(request.getSession().getValueNames());
 					response.sendRedirect("login.successful.html");
 				} 
-				else { // Èç¹ûÃÜÂëÓëÊı¾İ¿âÖĞ¶ÔÓ¦ÃÜÂë²»Í¬
+				else { // å¦‚æœå¯†ç ä¸æ•°æ®åº“ä¸­å¯¹åº”å¯†ç ä¸åŒ
 					response.sendRedirect("login.error.html");
 					System.out.println(rs.getString("password") + request.getParameter("password"));
 					return;
 				}
 			} // end if (rs.getString("password") == request.getParameter("password"));
-			else { // Èç¹û²éÑ¯ÎŞ½á¹û
+			else { // å¦‚æœæŸ¥è¯¢æ— ç»“æœ
 				response.sendRedirect("login.error.html");
 				return;
 			} // end if (rs.next());
